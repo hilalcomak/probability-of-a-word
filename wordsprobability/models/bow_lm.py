@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 import torch
 import torch.nn.functional as F
-from transformers import GPT2LMHeadModel, GPT2TokenizerFast, GPTNeoXForCausalLM, AutoTokenizer
+from transformers import GPT2LMHeadModel, GPT2TokenizerFast, GPTNeoXForCausalLM, AutoTokenizer, AutoModelForCausalLM, AutoModelWithLMHead
 
 
 class BaseBOWModel(ABC):
@@ -152,7 +152,7 @@ class BaseBOWModel(ABC):
         return np.array(self.tokenizer.convert_ids_to_tokens(tensor_input[0]))[1:]
 
 
-class GPT2BaseModel(BaseBOWModel, ABC):
+class GPT2BaseModelEnglish(BaseBOWModel, ABC):
     language = 'english'
     model_cls = GPT2LMHeadModel
     tokenizer_cls = GPT2TokenizerFast
@@ -161,21 +161,31 @@ class GPT2BaseModel(BaseBOWModel, ABC):
         return self.model.lm_head.out_features
 
 
-class EnglishGpt2Xl(GPT2BaseModel):
+class EnglishGpt2Xl(GPT2BaseModelEnglish):
     model_name = 'gpt2-xl'
 
 
-class EnglishGpt2Large(GPT2BaseModel):
+class EnglishGpt2Large(GPT2BaseModelEnglish):
     model_name = 'gpt2-large'
 
 
-class EnglishGpt2Medium(GPT2BaseModel):
+class EnglishGpt2Medium(GPT2BaseModelEnglish):
     model_name = 'gpt2-medium'
 
 
-class EnglishGpt2Small(GPT2BaseModel):
+class EnglishGpt2Small(GPT2BaseModelEnglish):
     model_name = 'gpt2'
 
+class GPT2BaseModelGerman(BaseBOWModel, ABC):
+    language = 'german'
+    model_cls = AutoModelWithLMHead
+    tokenizer_cls = AutoTokenizer
+
+    def _get_n_logits(self):
+        return self.model.lm_head.out_features
+
+class GermanGpt2Small(GPT2BaseModelGerman):
+    model_name = 'dbmdz/german-gpt2-faust'
 
 class PythiaBaseModel(BaseBOWModel, ABC):
     language = 'english'

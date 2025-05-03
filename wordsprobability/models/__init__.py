@@ -1,7 +1,8 @@
 from .bow_lm import \
     EnglishGpt2Small, EnglishGpt2Medium, EnglishGpt2Large, EnglishGpt2Xl, \
     EnglishPythia70M, EnglishPythia160M, EnglishPythia410M, \
-    EnglishPythia14B, EnglishPythia28B, EnglishPythia69B, EnglishPythia120B
+    EnglishPythia14B, EnglishPythia28B, EnglishPythia69B, EnglishPythia120B, \
+    GermanGpt2Small
 
 MODELS = {
     "gpt2-small": EnglishGpt2Small,
@@ -15,6 +16,7 @@ MODELS = {
     "pythia-28b": EnglishPythia28B,
     "pythia-69b": EnglishPythia69B,
     "pythia-120b": EnglishPythia120B,
+    "dbmdz/german-gpt2-faust": GermanGpt2Small
 }
 
 LANGUAGES = {
@@ -29,6 +31,7 @@ LANGUAGES = {
     "pythia-28b": {"en"},
     "pythia-69b": {"en"},
     "pythia-120b": {"en"},
+    "dbmdz/german-gpt2-faust": {"de"},
 }
 
 def get_model(model_name):
