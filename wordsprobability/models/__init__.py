@@ -17,6 +17,19 @@ MODELS = {
     "pythia-120b": EnglishPythia120B,
 }
 
+LANGUAGES = {
+    "gpt2-small": {"en"},
+    "gpt2-medium": {"en"},
+    "gpt2-large": {"en"},
+    "gpt2-xl": {"en"},
+    "pythia-70m": {"en"},
+    "pythia-160m": {"en"},
+    "pythia-410m": {"en"},
+    "pythia-14b": {"en"},
+    "pythia-28b": {"en"},
+    "pythia-69b": {"en"},
+    "pythia-120b": {"en"},
+}
 
 def get_model(model_name):
     model_cls = MODELS[model_name]

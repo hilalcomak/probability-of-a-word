@@ -89,7 +89,7 @@ class BaseBOWModel(ABC):
 
     def get_models_output(self, sentence, use_bos_symbol=True, stride=200):
         with torch.no_grad():
-            all_results = {metric: torch.tensor([], device=self.device)
+            all_results = {metric: torch.tensor([], device=torch.device('cpu'))
                            for metric in self.metrics}
             offset_mapping = []
             start_ind = 0
@@ -137,14 +137,14 @@ class BaseBOWModel(ABC):
         # ToDo: Should punctuation be a bow as well?
         # bow_fix = - np.log(((self.bow_mask + self.punct_mask) * probs).sum(-1))
         bow_vocab = self.vocab_masks['bow'] + self.vocab_masks['eos']
-        bow_fix = - torch.log((bow_vocab * probs).sum(-1))
+        bow_fix = - torch.log((bow_vocab * probs.cpu()).sum(-1))
 
         return bow_fix.view(-1).cpu().numpy()
 
     def _get_bos_fix(self, logits, _, __, ___):
         probs = F.softmax(logits, dim=-1)
         bos_vocab = self.vocab_masks['mid'] + self.vocab_masks['punct'] + self.vocab_masks['eos']
-        bos_fix = - torch.log((bos_vocab * probs).sum(-1))
+        bos_fix = - torch.log((bos_vocab * probs.cpu()).sum(-1))
 
         return bos_fix.view(-1).cpu().numpy()
 

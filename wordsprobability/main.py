@@ -2,8 +2,8 @@ import argparse
 from typing import List, Optional
 import pandas as pd
 
-from .models import get_model, get_bow_symbol
-from .utils import constants, utils
+from .models import get_model, get_bow_symbol, MODELS
+from .utils import utils
 
 
 def get_args():
@@ -12,7 +12,7 @@ def get_args():
     parser.add_argument('--input', type=str, required=True)
     parser.add_argument('--output', type=str, required=True)
     # Model
-    parser.add_argument('--model', type=str, required=True, choices=constants.MODELS)
+    parser.add_argument('--model', type=str, required=True, choices=MODELS.keys())
     # Extra Options
     parser.add_argument('--return-buggy-surprisals', action='store_true')
 
