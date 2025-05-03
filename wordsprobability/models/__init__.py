@@ -1,3 +1,5 @@
+from functools import cache
+
 from .bow_lm import \
     EnglishGpt2Small, EnglishGpt2Medium, EnglishGpt2Large, EnglishGpt2Xl, \
     EnglishPythia70M, EnglishPythia160M, EnglishPythia410M, \
@@ -34,6 +36,7 @@ LANGUAGES = {
     "dbmdz/german-gpt2-faust": {"de"},
 }
 
+@cache
 def get_model(model_name):
     model_cls = MODELS[model_name]
     return model_cls()
